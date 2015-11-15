@@ -7,6 +7,7 @@
 #include <time.h>
 #include <math.h>
 #include <png++/png.hpp>
+#include <string>
 
 
 /*Linux users will need to add -ldl to the Makefile to compile 
@@ -529,16 +530,34 @@ int pixsize=10;
 int wallstrue=1;
 char * name="maze.png";
 
-if (argc>1)
-xres=std::stoi(argv[1]);
-if (argc>2)
-yres=std::stoi(argv[2]);
-if (argc>3)
-pixsize=std::stoi(argv[3]);
-if (argc>4)
-wallstrue=std::stoi(argv[4]);
-if (argc>5)
-name=argv[5];
+//if (argc>1)
+//xres=std::stoi(argv[1]);
+//if (argc>2)
+//yres=std::stoi(argv[2]);
+//if (argc>3)
+//pixsize=std::stoi(argv[3]);
+//if (argc>4)
+//wallstrue=std::stoi(argv[4]);
+//if (argc>5)
+//name=argv[5];
+
+
+for (int i=1;i<argc;i++)
+{
+    std::string flag=argv[i];
+if (flag=="-w"||flag=="--width")
+xres=std::stoi(argv[i+1]);
+if (flag=="-h"||flag=="--height")
+yres=std::stoi(argv[i+1]);
+if (flag=="-p"||flag=="--pixel-size")
+pixsize=std::stoi(argv[i+1]);
+if (flag=="-z"||flag=="--walls")
+wallstrue=std::stoi(argv[i+1]);
+if (flag=="-n"||flag=="--file-name")
+name=argv[i+1];
+
+
+}
 
 
 Draw xwin(pixsize,xres,yres);
