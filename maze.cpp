@@ -551,7 +551,7 @@ if (flag=="-h"||flag=="--height")
 yres=std::stoi(argv[i+1]);
 if (flag=="-p"||flag=="--pixel-size")
 pixsize=std::stoi(argv[i+1]);
-if (flag=="-z"||flag=="--walls")
+if (flag=="-b"||flag=="--walls")
 wallstrue=std::stoi(argv[i+1]);
 if (flag=="-n"||flag=="--file-name")
 name=argv[i+1];
