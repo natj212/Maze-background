@@ -9,6 +9,7 @@ Description
     Run this program to generate a coloured maze.
     
 Options
+
     -w, --width
         Sets the width of the png.
 
