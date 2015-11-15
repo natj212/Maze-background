@@ -1,10 +1,10 @@
-all: mazepng.o link
+all: maze.o link
 
-mazepng.o: mazepng.cpp
-	g++ --std=c++11 -c mazepng.cpp
+maze.o: maze.cpp
+	g++ --std=c++11 -c maze.cpp
 
-link: mazepng.o
-	g++ --std=c++11 mazepng.o -lpng -o mazepng
+link: maze.o
+	g++ --std=c++11 maze.o -lpng -o mazepng
 
 clean: 
-	rm mazepng.o mazepng
+	rm maze.o mazepng
