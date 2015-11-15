@@ -20,3 +20,8 @@ Options
         
     -n, --file-name
         Set the file name for the output.
+
+
+
+Here's the blogpost that give me the inspiration for this
+https://danceswithpotatoes.wordpress.com/2015/03/08/prototype-1-using-a-maze-generator-for-procedural-art/
