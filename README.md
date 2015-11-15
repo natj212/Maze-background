@@ -2,11 +2,7 @@
 
 
 
-Name
-      mazepng
-      
-Description
-    Run this program to generate a coloured maze.
+Run this program to generate a randomly generated png file of a maze.
     
 Options
 
