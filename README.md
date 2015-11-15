@@ -3,6 +3,10 @@
 
 
 Run this program to generate a randomly generated png file of a coloured maze.
+
+Dependancies
+
+*png++
     
 Options
 
@@ -25,3 +29,5 @@ Options
 
 Here's the blogpost that give me the inspiration for this
 https://danceswithpotatoes.wordpress.com/2015/03/08/prototype-1-using-a-maze-generator-for-procedural-art/
+
+
