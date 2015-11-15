@@ -2,7 +2,7 @@
 
 
 
-Run this program to generate a randomly generated png file of a maze.
+Run this program to generate a randomly generated png file of a coloured maze.
     
 Options
 
