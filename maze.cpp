@@ -471,7 +471,7 @@ int main(int argc,char *argv[]) {
     int xres=1920;
     int yres=1080;
     int pixsize=10;
-    // 0 - Complete desaturation, 100 - Original colors
+    // 0 - Original colors, 100 - Complete desaturation
     int saturation=100;
     //if wallstrue equals zero then there will be no walls, else there will be walls
     int wallstrue=1;
