@@ -590,7 +590,6 @@ if (wallstrue!=0)
 
 	for (int i=0;i<6;i++)
 	{
-	for (int i=0;i<6;i++)
 	colors[i]=rand()%256;
 	}
 
@@ -598,7 +597,7 @@ if (wallstrue!=0)
 
 	while (distance<200|distance>300)
 	{
-	for (int i=0;i<5;i++)
+	for (int i=0;i<6;i++)
 	colors[i]=rand()%256;
 	distance =sqrt(  pow((colors[0]-colors[3]),2) + pow((colors[1]-colors[4]),2) + pow((colors[3]-colors[5]),2));
 	}
