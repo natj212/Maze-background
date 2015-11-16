@@ -472,7 +472,7 @@ int main(int argc,char *argv[]) {
     int yres=1080;
     int pixsize=10;
     // 0 - Original colors, 100 - Complete desaturation
-    int saturation=100;
+    int saturation=0;
     //if wallstrue equals zero then there will be no walls, else there will be walls
     int wallstrue=1;
     char * name="maze.png";
