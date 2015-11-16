@@ -1,5 +1,6 @@
 # Maze-background
 
+![alt tag](http://imgur.com/a/W2qPG)
 
 
 Run this program to generate a randomly generated png file of a coloured maze.
