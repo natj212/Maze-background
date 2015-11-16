@@ -7,8 +7,8 @@ Run this program to generate a randomly generated png file of a coloured maze.
 
 Dependancies
 
-png++
-    
+[png++](http://www.nongnu.org/pngpp/)  
+  
 Options
 
     -w, --width
