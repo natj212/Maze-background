@@ -456,17 +456,6 @@ int main(int argc,char *argv[]) {
     int wallstrue=1;
     char * name="maze.png";
     
-    //if (argc>1)
-    //xres=std::stoi(argv[1]);
-    //if (argc>2)
-    //yres=std::stoi(argv[2]);
-    //if (argc>3)
-    //pixsize=std::stoi(argv[3]);
-    //if (argc>4)
-    //wallstrue=std::stoi(argv[4]);
-    //if (argc>5)
-    //name=argv[5];
-    
     
     for (int i=1;i<argc;i++)
     {
@@ -517,6 +506,7 @@ int main(int argc,char *argv[]) {
     	colors[i]=rand()%256;
 	}
 
+	double distance =sqrt(  pow((colors[0]-colors[3]),2) + pow((colors[1]-colors[4]),2) + pow((colors[3]-colors[5]),2));
 
 	while (distance<200|distance>300) {
     	for (int i=0;i<6;i++)
@@ -532,14 +522,7 @@ int main(int argc,char *argv[]) {
     //	maze.drawValues(&xwin,255,255,255,0,0,0);
     
     
-    
     xwin.writePng(name);
-    
-    
-    
-    //	xwin.printPoints();
-    //	xwin.drawScene();
-    
     
     
     xwin.clearStack();
