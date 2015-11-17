@@ -25,6 +25,9 @@ Options
         
     -n, --file-name
         Set the file name for the output.
+        
+    -d, --desaturate
+        Desaturate colors where 0 is original color and 100 is complete desaturation
 
 
 
