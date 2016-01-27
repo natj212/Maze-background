@@ -5,7 +5,7 @@ while true; do
 
 feh --bg-center maze.png &
 
-ODDS=3
+ODDS=2
 T=1
 number=$RANDOM
 
@@ -15,7 +15,7 @@ prog=~/documents/cpp/maze/png/mazepng
 let "number %= $ODDS"
 if [ "$number" -eq $T ]
 then
-$prog -w 1920 -h 1080 -p 5 -b 1 -n maze.png 
+$prog -w 1920 -h 1080 -p 20 -b 1 -n -t 5 maze.png 
 else
 $prog -w 1920 -h 1080 -p 1 -b 0 -n maze.png 
 fi  
