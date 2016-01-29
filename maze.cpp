@@ -15,48 +15,26 @@
 class Draw {
     private:
 	png::image < png::rgb_pixel > image;
-	std::stack <int> pointlist; //it is a stack of interger values, x, y,width,height in that order for drawing a rectangle
-	std::stack <char *> colorlist; //it is a stack of colors that the top color is used for the current rectangle
-	void renderRect(); //renders the rectangles inside of the drawScene
-
     public:
 	int screenwidth,screenheight;
 	Draw(int,int,int); //Contructor 
-	void pushRect(char *,int,int,int,int);
-	void printPoints();//prints all the points
-	void redraw();
-	void clearStack(); 
 	int pixwidth;
 	void writePng(char *);
-	void drawRectangle(int,int,int,int,char *);
+	void drawRectangle(int,int,int,int,png::rgb_pixel);
 };
 
 
 void Draw::writePng(char * name) {
-    renderRect();
     image.write(name);
 }
 
-void Draw::drawRectangle(int x,int y,int width,int height,char * color) {
-
-    std::string rstr,gstr,bstr;
-
-    rstr+=color[1]; rstr+=color[2];
-
-    gstr+=color[3]; gstr+=color[4];
-
-    bstr+=color[5]; bstr+=color[6];
-
-    int r,g,b;
-
-    r=std::stoi(rstr,nullptr,16);
-    g=std::stoi(gstr,nullptr,16);
-    b=std::stoi(bstr,nullptr,16);
+void Draw::drawRectangle(int x,int y,int width,int height,png::rgb_pixel pixel) {
+    //std::cout<<"X pos:"<<x<<"	Y pos:"<<y<<"	width:"<<width<<"   height:"<<height<<"	Red:"<<(int)pixel.red<<"	Green:"<<(int)pixel.green<<"	    Blue:"<<(int)pixel.blue<<std::endl;
 
 
     for (int h=y;h<(y+height);h++) {
 	for (int w=x; w<(x+width);w++) {
-	    image[w][h]=png::rgb_pixel(r,g,b);
+	    image[w][h]=pixel;
 	}
     }
 }
@@ -71,69 +49,16 @@ Draw::Draw(int xpixwidth,int width,int height) {
 }
 
 
-void Draw::clearStack() {
-    while (!pointlist.empty())
-	pointlist.pop();
 
-    while (!colorlist.empty())
-	colorlist.pop();
-}
-
-void Draw::pushRect(char * color,int x, int y, int width, int height) {
-    pointlist.push(height);
-    pointlist.push(width);
-    pointlist.push(y);
-    pointlist.push(x);
-    colorlist.push(color);
-
-}
-
-void Draw::printPoints() {
-    std::stack <int> temp;//temperarily stores the points
-    temp = pointlist;
-    while (!temp.empty()) {
-	std::cout<<temp.top()<<std::endl;
-	temp.pop();
-    }
-}
-
-void Draw::renderRect() {
-    std::stack <int> tempPoints;
-    std::stack <char *> tempColor;
-
-    tempPoints=pointlist;
-    tempColor=colorlist;
-
-    if (pointlist.size()/4!=(colorlist.size()))
-	std::cout<<"Error,mismatch between number of colors and points in the rectangle"<<std::endl;
-
-    while(!tempPoints.empty()) {
-	int x = tempPoints.top();
-	tempPoints.pop();
-	int y = tempPoints.top();
-	tempPoints.pop();
-	int width = tempPoints.top();
-	tempPoints.pop();
-	int height = tempPoints.top();
-	tempPoints.pop();
-
-
-	drawRectangle(x,y,width,height,tempColor.top());
-
-	tempColor.pop();
-    }
-}
 
 
 //pixwidth is the width in pixels that the walls are
-void drawWall(std::vector <bool> wallx, int wallwidth,int wallheight, Draw * drawobj,char * color,double xscale,double yscale,bool isvert) {
+void drawWall(std::vector <bool> wallx, int wallwidth,int wallheight, Draw * drawobj,png::rgb_pixel pixel,double xscale,double yscale,bool isvert) {
     int x;
     int y;
     int row=wallwidth;
     int colum=wallheight;
     int pw=drawobj->pixwidth;
-
-    //wallx=flip(wallx);
 
     while (!wallx.empty()) {
 	int pixwidth=pw;
@@ -146,16 +71,18 @@ void drawWall(std::vector <bool> wallx, int wallwidth,int wallheight, Draw * dra
 	x=(row-1)*pw;
 	y=(colum-1)*pw;
 
-	//std::cout<<"row:"<<row<<"colum:"<<colum<<std::endl;
-	//std::cout<<"x:"<<x<<"	y:"<<y<<std::endl;
-
 	if (wallx.back()==1) {
-	    drawobj->pushRect(color,x,y,pixwidth*xscale+(pixwidth*(!isvert)*yscale),pixwidth*yscale+(pixwidth*isvert*xscale));
+	    int width = pw*xscale+(pw*(!isvert)*yscale);
+	    int height = pw*yscale+(pw*isvert*xscale);
+	    drawobj->drawRectangle(x,y,width,height,pixel);
+
+
+//	    drawobj->pushRect(color,x,y,pixwidth*xscale+(pixwidth*(!isvert)*yscale),pixwidth*yscale+(pixwidth*isvert*xscale));
 	}
 
 	row--;
 
-	wallx.erase(wallx.end());
+	wallx.pop_back();
     }
 }
 
@@ -175,7 +102,7 @@ class Maze {
 	void breakWall(direction);
 	bool checkVisited(direction);
 	void moveForward(direction);
-	void startCreation(bool,int);
+	void startCreation(int);
 	void nextStep();
 	void prntdir(direction);
 	bool checkAnyVis();
@@ -284,7 +211,7 @@ bool Maze::checkVisited(direction dir) {
 
 
 
-void Maze::startCreation(bool xloops,int seed) {
+void Maze::startCreation(int seed) {
     srand(seed);
     xpos=(rand()%(wall.width-1))+1;
     ypos=(rand()%(wall.height-1))+1;
@@ -296,7 +223,6 @@ void Maze::startCreation(bool xloops,int seed) {
     startx=xpos;
     starty=ypos;
 
-    loops=xloops;
 }
 
 void Maze::moveForward(direction dir) {
@@ -360,40 +286,17 @@ void Maze::nextStep() {
 	    //queue.pop(); queue.pop();
 	}
 
-	if (loops==FALSE)
-	    break;
-
     } while (startx!=xpos||starty!=ypos);
 
 }
 
-
-void drawBlock(int xp, int yp,Draw * drawobj,Maze * maze,char * color) {
+void drawBlock(int xp, int yp,Draw * drawobj,Maze * maze,int r, int g, int b) {
     int pixwidth=drawobj->pixwidth;
     int x=xp*pixwidth;
     int y=yp*pixwidth;
 
-    drawobj->pushRect(color,x-pixwidth,y-pixwidth,pixwidth,pixwidth);
-}
-
-std::string stringColor(int r, int g, int b) {
-    std::string text;
-
-    int colors[]={r,g,b};
-
-    text+='#';
-
-    for (int i=0;i<3;i++) {
-	char foo[10];
-	sprintf(foo,"%x",colors[i]);
-
-	if (colors[i]<16)
-	    text+='0';
-
-	text+=foo;
-    }
-
-    return text;
+    drawobj->drawRectangle(x-pixwidth,y-pixwidth,pixwidth,pixwidth,png::rgb_pixel(r,g,b));
+//    drawobj->pushRect(color,x-pixwidth,y-pixwidth,pixwidth,pixwidth);
 }
 
 
@@ -401,8 +304,6 @@ void Maze::drawValues(Draw * xwin,int ra,int ga, int ba,int rb, int gb, int bb,i
 
     for (int h=1;h<wall.height;h++) {
 	for (int w=1;w<=wall.width;w++) {
-
-	    //    std::cout<<values[w][h]<<std::endl;
 
 	    double ratio = (float)values[w][h]*colormult/(float)(totalblocks+1);
 
@@ -416,20 +317,15 @@ void Maze::drawValues(Draw * xwin,int ra,int ga, int ba,int rb, int gb, int bb,i
 	    gc=(ga*ratio)+(gb*(1.0-ratio));
 	    bc=(ba*ratio)+(bb*(1.0-ratio));
 
-
-	    std::string tmp=stringColor(rc,gc,bc);
-
-
-	    char *color = new char[6];
-
-	    color=strcpy(color,tmp.c_str());
-
-	    drawBlock(w,h,xwin,this,color);
+	    drawBlock(w,h,xwin,this,rc,gc,bc);
+    
 	}
 
     }
 
 }
+
+
 
 
 void desaturate(float k, int *r, int *g, int *b) {
@@ -443,10 +339,7 @@ void desaturate(float k, int *r, int *g, int *b) {
 
 int main(int argc,char *argv[]) {
 
-    char green[] ="#00FF00";
-    char red[] ="#ff0000";
-    char white[]="#FFFFFF";
-    char black[]="#000000";
+    png::rgb_pixel black = png::rgb_pixel(0,0,0);
 
     //default resolution
     int xres=1920;
@@ -486,7 +379,9 @@ int main(int argc,char *argv[]) {
 	    seed=std::stoi(argv[i+1]);
 
     }
-
+    //ignores drawing walls if pixel size is 1
+    if (pixsize==1)
+	wallstrue=0;
 
     Draw xwin(pixsize,xres,yres);
 
@@ -495,22 +390,9 @@ int main(int argc,char *argv[]) {
 
     Maze maze(xblocks,yblocks);
 
-    //1 means it loops
-    maze.startCreation(1,seed);
-
+    maze.startCreation(seed);
 
     maze.nextStep();
-
-
-    if (wallstrue!=0) {
-	//horizontal
-	drawWall(maze.wall.horwalls,maze.wall.width,maze.wall.height,&xwin,black,1.0,1.0/2.0,0);
-	//verticle
-	drawWall(maze.wall.vertwalls,maze.wall.width+1,maze.wall.height-1,&xwin,black,1.0/2.0,1.0,1);
-
-    }
-
-
 
     int colors[6];
 
@@ -531,11 +413,15 @@ int main(int argc,char *argv[]) {
 
     maze.drawValues(&xwin,colors[0],colors[1],colors[2],colors[3],colors[4],colors[5],colormult);
 
+    if (wallstrue!=0) {
+	//horizontal
+	drawWall(maze.wall.horwalls,maze.wall.width,maze.wall.height,&xwin,black,1.0,1.0/2.0,0);
+	//verticle
+	drawWall(maze.wall.vertwalls,maze.wall.width+1,maze.wall.height-1,&xwin,black,1.0/2.0,1.0,1);
+
+    }
 
     xwin.writePng(name);
-
-
-    xwin.clearStack();
 
     return 0;
 }

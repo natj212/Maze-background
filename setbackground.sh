@@ -8,14 +8,16 @@ feh --bg-center maze.png &
 ODDS=2
 T=1
 number=$RANDOM
+colmult=$RANDOM
 
 #location of mazepng
-prog=~/documents/cpp/maze/png/mazepng
+prog=~/documents/git/myprojects/Maze-background/Maze-background/mazepng
 
 let "number %= $ODDS"
+let "colmult %=100"
 if [ "$number" -eq $T ]
 then
-$prog -w 1920 -h 1080 -p 20 -b 1 -n -t 5 maze.png 
+$prog -w 1920 -h 1080 -p 20 -b 1 -n -t $colmult maze.png 
 else
 $prog -w 1920 -h 1080 -p 1 -b 0 -n maze.png 
 fi  
