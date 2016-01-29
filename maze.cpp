@@ -29,8 +29,6 @@ void Draw::writePng(char * name) {
 }
 
 void Draw::drawRectangle(int x,int y,int width,int height,png::rgb_pixel pixel) {
-    //std::cout<<"X pos:"<<x<<"	Y pos:"<<y<<"	width:"<<width<<"   height:"<<height<<"	Red:"<<(int)pixel.red<<"	Green:"<<(int)pixel.green<<"	    Blue:"<<(int)pixel.blue<<std::endl;
-
 
     for (int h=y;h<(y+height);h++) {
 	for (int w=x; w<(x+width);w++) {
@@ -77,7 +75,6 @@ void drawWall(std::vector <bool> wallx, int wallwidth,int wallheight, Draw * dra
 	    drawobj->drawRectangle(x,y,width,height,pixel);
 
 
-//	    drawobj->pushRect(color,x,y,pixwidth*xscale+(pixwidth*(!isvert)*yscale),pixwidth*yscale+(pixwidth*isvert*xscale));
 	}
 
 	row--;
@@ -307,7 +304,8 @@ void Maze::drawValues(Draw * xwin,int ra,int ga, int ba,int rb, int gb, int bb,i
 
 	    double ratio = (float)values[w][h]*colormult/(float)(totalblocks+1);
 
-	    ratio -= (float)((int) ratio);
+	    if (ratio > 1.0)
+		ratio -= (float)((int) ratio);
 
 	    ratio+=0.0000000001;
 
