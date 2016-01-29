@@ -28,10 +28,13 @@ Options
         
     -d, --desaturate
         Desaturate colors where 0 is original color and 100 is complete desaturation
+        
     -s, --seed
 	Sets the random seed.
+	
     -t, --color-multiplier
 	Sets the number of times you will shift through the colours
+	
 
 
 
