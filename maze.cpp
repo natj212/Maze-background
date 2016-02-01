@@ -8,6 +8,7 @@
 #include <math.h>
 #include <png++/png.hpp>
 #include <string>
+#include <sstream>
 
 #define TRUE	1
 #define FALSE	0
@@ -354,7 +355,9 @@ int main(int argc,char *argv[]) {
     //if wallstrue equals zero then there will be no walls, else there will be walls
     int wallstrue=1;
     char * name="maze.png";
-
+    //true if user picks the colors
+    bool setColor=false;
+    std::string userColor;
 
     for (int i=1;i<argc;i++)
     {
@@ -375,8 +378,15 @@ int main(int argc,char *argv[]) {
 	    colormult=std::stoi(argv[i+1]);
 	if (flag=="-s"||flag=="--seed")
 	    seed=std::stoi(argv[i+1]);
+	if (flag=="-c"||flag=="--set-color")
+	    {
+		setColor=true;
+		userColor=argv[i+1];
+	    }
+
 
     }
+
     //ignores drawing walls if pixel size is 1
     if (pixsize==1)
 	wallstrue=0;
@@ -394,6 +404,9 @@ int main(int argc,char *argv[]) {
 
     int colors[6];
 
+    if (setColor==false)
+    {
+
     for (int i=0;i<6;i++) {
 	colors[i]=rand()%256;
     }
@@ -408,6 +421,20 @@ int main(int argc,char *argv[]) {
 
     desaturate(saturation / 100.0, &colors[0], &colors[1], &colors[2]);
     desaturate(saturation / 100.0, &colors[3], &colors[4], &colors[5]);
+
+    }
+    else
+    {
+	for (int i=0;i<12;i+=2)
+	{
+	    unsigned int col;
+	    std::stringstream ss;
+	    ss << std::hex << std::string(userColor.begin()+i,userColor.begin()+i+2);
+	    ss >> col;
+	    colors[i/2]=col;
+	}
+	
+    }
 
     maze.drawValues(&xwin,colors[0],colors[1],colors[2],colors[3],colors[4],colors[5],colormult);
 

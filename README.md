@@ -34,6 +34,9 @@ Options
 	
     -t, --color-multiplier
 	Sets the number of times you will shift through the colours
+
+    -c, --set-color
+	Sets the colors to shift through, for example FDF0AB42F8CD
 	
 
 
