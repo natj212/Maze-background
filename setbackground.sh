@@ -30,5 +30,5 @@ $prog -w 1920 -h 1080 -p 20 -b 1 -n maze.png
 fi  
 
 #time till it generates a new background
-sleep 10;
+sleep 600;
 done
