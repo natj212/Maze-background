@@ -1,6 +1,14 @@
 #!/bin/bash
 
 #script to set the desktop background to a randomly generated maze
+
+#location of mazepng
+prog=~/documents/git/Maze-background/mazepng
+
+if [ ! -a maze.png ]; then
+$prog -w 1920 -h 1080 -p 20 -b 1 -n maze.png 
+fi
+
 while true; do
 
 feh --bg-center maze.png &
@@ -10,14 +18,12 @@ T=1
 number=$RANDOM
 colmult=$RANDOM
 
-#location of mazepng
-prog=~/documents/git/myprojects/Maze-background/Maze-background/mazepng
 
 let "number %= $ODDS"
 let "colmult %=100"
 if [ "$number" -eq $T ]
 then
-$prog -w 1920 -h 1080 -p 20 -b 1 -n -t $colmult maze.png 
+$prog -w 1920 -h 1080 -p 20 -b 1 -n maze.png -t $colmult  
 else
 $prog -w 1920 -h 1080 -p 1 -b 0 -n maze.png 
 fi  
