@@ -24,11 +24,11 @@ let "number %= $ODDS"
 let "colmult %=5"
 if [ "$number" -eq $T ]
 then
-$prog -w 1920 -h 1080 -p 1 -b 0 -t $colmult -n maze.png 
+$prog -w 1920 -h 1080 -p 1 -n maze.png 
 else
-$prog -w 1920 -h 1080 -p 20 -b 1 -n maze.png   
+$prog -w 1920 -h 1080 -p 20 -b 1 -c 000000FFFFFF -n maze.png   
 fi  
 
 #time till it generates a new background
-sleep 600;
+sleep 6;
 done
