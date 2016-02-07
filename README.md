@@ -44,6 +44,9 @@ Options
 Here's the blogpost that give me the inspiration for this
 https://danceswithpotatoes.wordpress.com/
 
+Original idea:
+http://www.gamasutra.com/blogs/LaurentVictorino/20141202/231321/Mazes_hidden_beauty.php
+
 Tmathmeyer has created a very similar maze generator to this which is much faster. If the performance for this project is a problem check out his project.
 https://github.com/tmathmeyer/maze
 
